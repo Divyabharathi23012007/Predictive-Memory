@@ -94,6 +94,8 @@
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       font-size: 18px;
+      -webkit-background-clip: text;
+      background-clip: text;
     }
 
     .logo-text {
@@ -104,8 +106,9 @@
       background: linear-gradient(90deg, var(--accent1), var(--accent2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-    }
-
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    } 
     .logo-sub {
       font-size: 11px;
       color: var(--muted);
@@ -755,7 +758,7 @@
   }
 
   function updateDashboard() {
-    fetch("http://127.0.0.1:8000/scan")
+    fetch("https://memoria-backend.onrender.com/scan")
       .then(res => res.json())
       .then(data => {
         const cur  = data.current_memory_mb;
