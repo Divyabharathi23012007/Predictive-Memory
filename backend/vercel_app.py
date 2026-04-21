@@ -16,9 +16,8 @@ from database import (
 
 app = FastAPI()
 
-# Initialize database on startup (only if not in Vercel)
-if not os.getenv("VERCEL"):
-    initialize_database()
+# Initialize database on startup
+initialize_database()
 
 # Allow frontend access
 app.add_middleware(
@@ -32,7 +31,7 @@ app.add_middleware(
 def root():
     return {"message": "Predictive Memory Management Backend Running"}
 
-@app.get("/scan")
+@app.get("/api/scan")
 def scan_system():
     mem = psutil.virtual_memory()
 
@@ -90,8 +89,7 @@ def scan_system():
         "top_processes": top_procs,
     }
 
-
-@app.get("/processes")
+@app.get("/api/processes")
 def get_processes():
     """Get the top memory-consuming processes from the latest snapshot"""
     procs = get_top_processes(5)
@@ -100,7 +98,7 @@ def get_processes():
         "processes": procs,
     }
 
-@app.get("/history")
+@app.get("/api/history")
 def get_history(limit: int = 100):
     """Get historical memory readings"""
     history = get_memory_history(limit)
@@ -109,7 +107,7 @@ def get_history(limit: int = 100):
         "data": history
     }
 
-@app.get("/stats")
+@app.get("/api/stats")
 def get_stats(hours: int = 1):
     """Get memory statistics"""
     stats = get_memory_stats(hours)
@@ -127,5 +125,5 @@ def get_training():
         "data": data
     }
 
-# Vercel serverless handler
+# For Vercel serverless deployment
 handler = app

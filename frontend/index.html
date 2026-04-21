@@ -758,7 +758,7 @@
   }
 
   function updateDashboard() {
-    fetch("https://memoria-backend.onrender.com/scan")
+    fetch("/scan")
       .then(res => res.json())
       .then(data => {
         const cur  = data.current_memory_mb;
